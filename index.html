@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>よけて！れいたうん</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="game-shell">
+      <div class="game" id="game" aria-label="よけて！れいたうん">
+        <div class="sky">
+          <span class="cloud cloud-a"></span>
+          <span class="cloud cloud-b"></span>
+          <span class="cloud cloud-c"></span>
+        </div>
+
+        <header class="hud">
+          <p class="mini-title">よけて！れいたうん</p>
+          <p class="score" aria-label="スコア">
+            <span class="score-icon" aria-hidden="true"></span>
+            <span class="score-label">スコア</span>
+            <span class="score-number" id="score">0</span>
+          </p>
+        </header>
+
+        <div class="start-tip" id="startTip" aria-live="polite">
+          <img src="assets/start_tip.png" alt="タップしてしょうがいぶつをよけよう！">
+        </div>
+
+        <div class="bonus-banner" id="bonusBanner" aria-hidden="true">
+          <img src="assets/bonus_time.png" alt="ボーナスタイム！">
+        </div>
+
+        <p class="bonus-status" id="bonusStatus" aria-live="polite">ピザぞうりょうちゅう</p>
+
+        <div class="supporter" id="supporter" aria-hidden="true">
+          <p class="supporter-speech">れいちゃん、ピザやけたよ〜！</p>
+          <img src="assets/dice.png" alt="">
+        </div>
+
+        <section class="screen start-screen" id="startScreen">
+          <h1>
+            <img class="title-logo" src="assets/title_yoketereitown.png" alt="よけて！れいたうん">
+            <span class="visually-hidden">よけて！れいたうん</span>
+          </h1>
+          <button class="primary-button" id="startButton" type="button">スタート</button>
+        </section>
+
+        <section class="screen game-over-screen hidden" id="gameOverScreen">
+          <div class="final-panel">
+            <div class="final-decoration final-star-a" aria-hidden="true"></div>
+            <div class="final-decoration final-star-b" aria-hidden="true"></div>
+            <div class="final-decoration final-confetti-a" aria-hidden="true"></div>
+            <div class="final-decoration final-confetti-b" aria-hidden="true"></div>
+            <h2 class="final-title">
+              <span>すごい！</span>
+              <span>よくよけたね！</span>
+            </h2>
+            <p class="final-score" aria-label="さいごのスコア">
+              <span class="final-score-label">スコア</span>
+              <span class="final-score-number" id="finalScore">0</span>
+            </p>
+            <button class="primary-button final-restart" id="restartButton" type="button">もういちど遊ぶ</button>
+          </div>
+        </section>
+
+        <div class="world" id="world">
+          <div class="cat" id="cat">
+            <img src="assets/cat.png" alt="れいたうん">
+          </div>
+          <div class="ground"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
