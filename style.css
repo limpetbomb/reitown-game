@@ -43,74 +43,30 @@ button {
   overflow: hidden;
   border: 8px solid #ffffff;
   border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 6%, transparent 6% 13%, rgba(255, 255, 255, 0.18) 13% 18%, transparent 18%),
-    linear-gradient(180deg, #bfe9ff 0%, #eefaff 62%, #fff4d0 63%, #f7dfa7 100%);
-  background-size: 190px 190px, 100% 100%;
+  background: url("assets/stage_bg_1.png") center / cover no-repeat;
   box-shadow: 0 18px 50px rgba(69, 132, 190, 0.24);
   user-select: none;
   touch-action: manipulation;
 }
 
 .game::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  bottom: 20%;
-  height: 28%;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 12% 46%, rgba(255, 143, 175, 0.75) 0 7px, transparent 8px),
-    radial-gradient(circle at 21% 58%, rgba(255, 226, 129, 0.75) 0 6px, transparent 7px),
-    radial-gradient(circle at 84% 50%, rgba(255, 143, 175, 0.65) 0 7px, transparent 8px),
-    radial-gradient(ellipse at 18% 88%, rgba(134, 211, 141, 0.7) 0 18%, transparent 18.5%),
-    radial-gradient(ellipse at 42% 92%, rgba(157, 223, 138, 0.58) 0 20%, transparent 20.5%),
-    radial-gradient(ellipse at 76% 90%, rgba(112, 191, 120, 0.5) 0 17%, transparent 17.5%);
+  content: none;
 }
 
 .game[data-stage="2"] {
-  background:
-    linear-gradient(90deg, transparent 0 48%, rgba(255, 255, 255, 0.5) 48% 52%, transparent 52%),
-    linear-gradient(180deg, #b6e7ff 0%, #e4f7ff 58%, #ccd4df 59%, #9fa9b8 100%);
-  background-size: 100% 100%, 100% 100%;
+  background-image: url("assets/stage_bg_2.png");
 }
 
 .game[data-stage="2"]::after {
-  height: 34%;
-  background:
-    linear-gradient(to top, #7fb4dc 0 72%, transparent 72%) 64% 100% / 76px 150px no-repeat,
-    linear-gradient(to top, #9cc9e7 0 68%, transparent 68%) 48% 100% / 62px 122px no-repeat,
-    linear-gradient(to top, #6fa6cf 0 62%, transparent 62%) 82% 100% / 54px 104px no-repeat,
-    linear-gradient(to top, #b9dcff 0 58%, transparent 58%) 28% 100% / 66px 112px no-repeat,
-    repeating-linear-gradient(90deg, #ffffff 0 8px, transparent 8px 22px) 64% 42% / 56px 70px no-repeat,
-    repeating-linear-gradient(90deg, #ffffff 0 7px, transparent 7px 20px) 48% 48% / 46px 54px no-repeat,
-    radial-gradient(ellipse at 18% 94%, rgba(157, 223, 138, 0.34) 0 18%, transparent 18.5%);
-  opacity: 1;
+  content: none;
 }
 
 .game[data-stage="3"] {
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.88) 0 32px, transparent 33px),
-    radial-gradient(circle at 82% 18%, rgba(255, 226, 129, 0.78) 0 38px, transparent 39px),
-    linear-gradient(180deg, #ffd3e6 0%, #fff1c4 54%, #ffb8cc 55%, #f48ba8 100%);
-  background-size: 100% 100%;
+  background-image: url("assets/stage_bg_3.png");
 }
 
 .game[data-stage="3"]::after {
-  height: 38%;
-  background:
-    repeating-linear-gradient(90deg, #ff8faf 0 22px, #fff7cf 22px 44px) 76% 82% / 170px 118px no-repeat,
-    linear-gradient(to top, #e07095 0 52%, transparent 52%) 76% 100% / 190px 140px no-repeat,
-    radial-gradient(circle at 10% 20%, #ff8faf 0 6px, transparent 7px),
-    radial-gradient(circle at 20% 28%, #ffe281 0 6px, transparent 7px),
-    radial-gradient(circle at 30% 20%, #8fc8ff 0 6px, transparent 7px),
-    radial-gradient(circle at 40% 28%, #ff8faf 0 6px, transparent 7px),
-    radial-gradient(circle at 50% 20%, #ffe281 0 6px, transparent 7px),
-    radial-gradient(ellipse at 76% 96%, rgba(255, 247, 207, 0.78) 0 22%, transparent 22.5%),
-    radial-gradient(ellipse at 34% 96%, rgba(143, 200, 255, 0.4) 0 16%, transparent 16.5%);
-  opacity: 1;
+  content: none;
 }
 
 .sky,
@@ -118,6 +74,10 @@ button {
 .screen {
   position: absolute;
   inset: 0;
+}
+
+.sky {
+  display: none;
 }
 
 .cloud {
@@ -199,13 +159,13 @@ button {
 .stage-pill {
   display: grid;
   place-items: center;
-  width: clamp(300px, 42vw, 430px);
-  min-height: clamp(78px, 10.5vw, 108px);
-  padding: 31px 90px 19px 78px;
+  width: clamp(330px, 44vw, 470px);
+  min-height: clamp(86px, 11vw, 118px);
+  padding: 34px 96px 22px 86px;
   border-radius: 0;
   background: url("assets/stage_sign_wide.png") center / contain no-repeat;
   color: #315fa7;
-  font-size: clamp(10px, 1.25vw, 13px);
+  font-size: clamp(11px, 1.35vw, 15px);
   text-shadow:
     0 2px 0 #ffffff,
     2px 0 0 #ffffff,
@@ -336,7 +296,7 @@ button {
   z-index: 6;
   left: 50%;
   top: auto;
-  bottom: clamp(28px, 5vw, 48px);
+  bottom: clamp(10px, 1.6vw, 20px);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -960,18 +920,16 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 24%;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.24) 0 18px, transparent 18px 42px),
-    linear-gradient(180deg, #fff2c0 0%, #f5d48e 100%);
-  background-size: 42px 100%, 100% 100%;
-  border-top: 5px solid rgba(255, 255, 255, 0.72);
+  height: 18%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.44) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-top: 4px solid rgba(255, 255, 255, 0.78);
+  pointer-events: none;
 }
 
 .cat {
   position: absolute;
   left: 9%;
-  bottom: 19%;
+  bottom: 16%;
   width: clamp(82px, 17vw, 138px);
   aspect-ratio: 582 / 686;
   transform: translateY(var(--jump-y, 0px));
@@ -1024,7 +982,7 @@ h2 {
   position: absolute;
   z-index: 4;
   left: 0;
-  bottom: 24%;
+  bottom: 18%;
   width: clamp(36px, 6vw, 52px);
   height: clamp(34px, 5.4vw, 48px);
   will-change: transform;
@@ -1076,7 +1034,7 @@ h2 {
 .item-trash {
   width: clamp(34px, 5.6vw, 48px);
   height: clamp(38px, 6vw, 54px);
-  bottom: 25%;
+  bottom: 19%;
   border-radius: 8px 8px 12px 12px;
   background:
     linear-gradient(90deg, transparent 0 24%, rgba(78, 90, 112, 0.28) 24% 31%, transparent 31% 46%, rgba(78, 90, 112, 0.22) 46% 53%, transparent 53% 70%, rgba(78, 90, 112, 0.22) 70% 77%, transparent 77%),
@@ -1122,7 +1080,7 @@ h2 {
 }
 
 .item-pizza {
-  bottom: 25%;
+  bottom: 19%;
   width: clamp(74px, 10vw, 104px);
   height: clamp(56px, 7.8vw, 78px);
   border-radius: 8px;
@@ -1327,12 +1285,12 @@ h2 {
   }
 
   .stage-pill {
-    width: clamp(200px, 58vw, 270px);
-    max-width: 60vw;
-    min-height: 56px;
+    width: clamp(220px, 62vw, 300px);
+    max-width: 64vw;
+    min-height: 62px;
     overflow: visible;
-    padding: 20px 56px 12px 48px;
-    font-size: 8px;
+    padding: 22px 62px 14px 54px;
+    font-size: 9px;
     text-overflow: ellipsis;
     transform: translateY(-6px);
   }
@@ -1352,21 +1310,21 @@ h2 {
 
   .cat {
     left: 8%;
-    bottom: 21%;
+    bottom: 15%;
     width: clamp(78px, 28vw, 124px);
   }
 
   .ground {
-    height: 20%;
+    height: 16%;
   }
 
   .item {
-    bottom: 27%;
+    bottom: 18%;
   }
 
   .item-trash,
   .item-pizza {
-    bottom: 27%;
+    bottom: 19%;
   }
 
   .item-pizza {
@@ -1394,7 +1352,7 @@ h2 {
 
   .bonus-status {
     top: auto;
-    bottom: max(24px, calc(env(safe-area-inset-bottom) + 18px));
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
   }
 
   .stage-banner {
