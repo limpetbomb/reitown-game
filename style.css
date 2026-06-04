@@ -244,6 +244,60 @@ button {
   box-shadow: inset 0 -2px 0 rgba(49, 95, 167, 0.08);
 }
 
+.guard-status {
+  position: absolute;
+  z-index: 6;
+  top: 84px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 7px 12px;
+  border: 4px solid #ffffff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff7cf 0%, #ffe9f0 100%);
+  color: #315fa7;
+  font-size: clamp(11px, 1.6vw, 14px);
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 5px 0 rgba(49, 95, 167, 0.13);
+  pointer-events: none;
+}
+
+.guard-apple {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 46% 54% 52% 48% / 44% 46% 54% 56%;
+  background: linear-gradient(145deg, #ff7a8a 0%, #dd4357 100%);
+  box-shadow: inset -3px -3px 0 rgba(150, 35, 53, 0.15);
+}
+
+.guard-apple::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 9px;
+  width: 4px;
+  height: 8px;
+  border-radius: 999px;
+  background: #7c5b3b;
+  transform: rotate(18deg);
+}
+
+.guard-apple::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 12px;
+  width: 10px;
+  height: 6px;
+  border-radius: 70% 20% 70% 20%;
+  background: #70bf78;
+  transform: rotate(-18deg);
+}
+
 .start-tip {
   position: absolute;
   z-index: 7;
@@ -333,6 +387,31 @@ button {
 .bonus-status.show {
   opacity: 1;
   transform: translate(-50%, 0) scale(1);
+}
+
+.rare-pizza-notice {
+  position: absolute;
+  z-index: 7;
+  left: 18px;
+  top: 92px;
+  margin: 0;
+  color: #f45d86;
+  font-size: clamp(14px, 2.4vw, 20px);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    0 2px 0 #ffffff,
+    2px 0 0 #ffffff,
+    -2px 0 0 #ffffff,
+    0 -2px 0 #ffffff,
+    0 5px 0 rgba(49, 95, 167, 0.12);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.95);
+}
+
+.rare-pizza-notice.show {
+  animation: rarePizzaNotice 1.7s ease-out both;
 }
 
 .stage-banner {
@@ -662,24 +741,60 @@ h2 {
   content: "";
   position: absolute;
   z-index: 1;
-  inset: -20% 0 auto;
-  height: 140%;
+  inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle, #ff8faf 0 4px, transparent 5px) 8% 0 / 80px 120px,
-    radial-gradient(circle, #8fc8ff 0 4px, transparent 5px) 36% 20px / 90px 130px,
-    radial-gradient(circle, #ffe281 0 4px, transparent 5px) 64% 10px / 86px 124px,
-    linear-gradient(35deg, transparent 0 42%, #9ddf8a 42% 58%, transparent 58%) 20% 0 / 70px 110px,
-    linear-gradient(-35deg, transparent 0 42%, #d7a2ff 42% 58%, transparent 58%) 78% 0 / 74px 118px;
-  opacity: 0;
+    radial-gradient(circle at 10% 18%, #ffe281 0 5px, transparent 6px),
+    radial-gradient(circle at 22% 76%, #8fc8ff 0 4px, transparent 5px),
+    radial-gradient(circle at 36% 14%, #ff8faf 0 3px, transparent 4px),
+    radial-gradient(circle at 68% 18%, #9ddf8a 0 4px, transparent 5px),
+    radial-gradient(circle at 84% 72%, #d7a2ff 0 4px, transparent 5px),
+    radial-gradient(circle at 91% 26%, #ffe281 0 3px, transparent 4px),
+    radial-gradient(circle at 15% 48%, rgba(255, 255, 255, 0.95) 0 3px, transparent 4px),
+    radial-gradient(circle at 76% 46%, rgba(255, 255, 255, 0.95) 0 3px, transparent 4px);
+  opacity: 0.74;
+  transform: scale(1);
 }
 
 .game-over-screen.clear-screen .final-panel::before {
-  animation: clearConfetti 4.8s linear infinite;
+  animation: clearSparkle 2.8s ease-in-out infinite;
 }
 
 .game-over-screen.clear-screen .final-panel::after {
-  animation: clearConfetti 4.8s linear 2.4s infinite;
+  background:
+    radial-gradient(circle at 18% 28%, #ffffff 0 3px, transparent 4px),
+    radial-gradient(circle at 28% 62%, #ffe281 0 4px, transparent 5px),
+    radial-gradient(circle at 44% 82%, #ff8faf 0 3px, transparent 4px),
+    radial-gradient(circle at 58% 12%, #8fc8ff 0 4px, transparent 5px),
+    radial-gradient(circle at 72% 78%, #9ddf8a 0 4px, transparent 5px),
+    radial-gradient(circle at 88% 42%, #ffffff 0 3px, transparent 4px);
+  opacity: 0.55;
+  animation: clearSparkle 3.4s ease-in-out 0.55s infinite;
+}
+
+.game-over-screen.clear-screen .final-confetti-a,
+.game-over-screen.clear-screen .final-confetti-b,
+.game-over-screen.clear-screen .final-confetti-c,
+.game-over-screen.clear-screen .final-confetti-d,
+.game-over-screen.clear-screen .final-confetti-e {
+  display: none;
+}
+
+.game-over-screen.clear-screen .final-star-a,
+.game-over-screen.clear-screen .final-star-b,
+.game-over-screen.clear-screen .final-star-c,
+.game-over-screen.clear-screen .final-dot-a,
+.game-over-screen.clear-screen .final-dot-b {
+  animation: finalTwinkle 2.2s ease-in-out infinite;
+}
+
+.game-over-screen.clear-screen .final-star-b,
+.game-over-screen.clear-screen .final-dot-b {
+  animation-delay: 0.55s;
+}
+
+.game-over-screen.clear-screen .final-star-c {
+  animation-delay: 1.1s;
 }
 
 .game-over-screen.clear-screen .final-title {
@@ -713,6 +828,55 @@ h2 {
   min-width: 60px;
   padding: 0 8px;
   font-size: clamp(30px, 5vw, 44px);
+}
+
+.game-over-screen.award-screen .final-title,
+.game-over-screen.award-screen .clear-party,
+.game-over-screen.award-screen .final-score {
+  display: none !important;
+}
+
+.game-over-screen.award-screen .final-panel {
+  width: min(94vw, 760px);
+  gap: 12px;
+  padding: clamp(10px, 1.8vw, 16px);
+}
+
+.award-card {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 720px);
+  margin: 0;
+  border: 6px solid #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #dff4ff;
+  box-shadow: 0 8px 0 rgba(49, 95, 167, 0.15), 0 20px 38px rgba(49, 95, 167, 0.14);
+}
+
+.award-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.award-score {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(18px, 5.4vw, 48px);
+  min-width: min(70%, 420px);
+  padding: 10px 22px;
+  border: 4px solid #ffffff;
+  border-radius: 999px;
+  background: rgba(255, 247, 207, 0.96);
+  color: #315fa7;
+  font-size: clamp(18px, 3.4vw, 34px);
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 2px 0 #ffffff;
+  box-shadow: 0 6px 0 rgba(49, 95, 167, 0.14);
+  transform: translateX(-50%);
 }
 
 .final-score {
@@ -760,13 +924,22 @@ h2 {
   box-shadow: none;
 }
 
-.final-restart {
+.final-actions {
   position: relative;
-  z-index: 3;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.final-restart,
+.award-button {
+  position: relative;
   left: auto;
   top: auto;
   width: auto;
-  min-width: 210px;
+  min-width: 190px;
   max-width: min(78vw, 260px);
   min-height: 54px;
   height: auto;
@@ -777,6 +950,11 @@ h2 {
   white-space: nowrap;
   box-shadow: 0 8px 0 #c94b72, 0 16px 28px rgba(201, 75, 114, 0.24);
   transform: none;
+}
+
+.award-button {
+  background: linear-gradient(180deg, #8fc8ff 0%, #5ca4ee 100%);
+  box-shadow: 0 8px 0 #417fc5, 0 16px 28px rgba(65, 127, 197, 0.22);
 }
 
 .final-decoration {
@@ -798,12 +976,14 @@ h2 {
 .final-star-a {
   left: 10%;
   top: 19%;
+  --twinkle-rotate: 0deg;
 }
 
 .final-star-b {
   right: 8%;
   top: 16%;
   background: #8fc8ff;
+  --twinkle-rotate: 16deg;
   transform: rotate(16deg);
 }
 
@@ -813,6 +993,7 @@ h2 {
   width: 22px;
   height: 22px;
   background: #ff8faf;
+  --twinkle-rotate: -12deg;
   transform: rotate(-12deg);
 }
 
@@ -951,6 +1132,12 @@ h2 {
   animation: happyCat 0.68s ease-out both;
 }
 
+.cat-invincible img {
+  filter:
+    drop-shadow(0 0 10px rgba(255, 226, 129, 0.95))
+    drop-shadow(0 10px 0 rgba(102, 111, 148, 0.11));
+}
+
 .flower {
   position: absolute;
   z-index: 4;
@@ -976,6 +1163,24 @@ h2 {
     radial-gradient(circle at 14% 38%, var(--flower-color) 0 22%, transparent 23%),
     radial-gradient(circle at 50% 50%, #ffe889 0 16%, transparent 17%);
   animation: flowerSpin 0.9s ease-out forwards;
+}
+
+.apple-sparkle {
+  position: absolute;
+  z-index: 4;
+  left: var(--sparkle-left);
+  top: var(--sparkle-top);
+  width: var(--sparkle-size);
+  height: var(--sparkle-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 45% 45%, #ffffff 0 18%, transparent 19%),
+    var(--sparkle-color);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.78);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: appleSparkle 0.82s ease-out forwards;
 }
 
 .item {
@@ -1092,6 +1297,72 @@ h2 {
   content: none;
 }
 
+.item-rare-pizza {
+  filter:
+    brightness(1.12)
+    saturate(1.35)
+    drop-shadow(0 0 14px rgba(255, 226, 129, 0.98))
+    drop-shadow(0 7px 0 rgba(129, 83, 44, 0.1));
+  animation: rarePizzaGlow 0.62s ease-in-out infinite alternate;
+}
+
+.item-rare-pizza::before {
+  content: "RARE";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: -12px;
+  padding: 3px 7px;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe281 0%, #ffbd3f 100%);
+  color: #f45d86;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 3px 0 rgba(49, 95, 167, 0.14);
+  transform: translateX(-50%) rotate(-5deg);
+}
+
+.item-rare-pizza::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: 6px;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  background: #ffe281;
+  clip-path: polygon(50% 0, 62% 34%, 98% 35%, 69% 57%, 79% 92%, 50% 72%, 21% 92%, 31% 57%, 2% 35%, 38% 34%);
+  filter: drop-shadow(0 2px 0 rgba(49, 95, 167, 0.12));
+  animation: rarePizzaStar 0.72s ease-in-out infinite alternate;
+}
+
+.item-trash-fast {
+  filter: drop-shadow(0 0 8px rgba(244, 93, 134, 0.5));
+}
+
+.obstacle-warning {
+  position: absolute;
+  z-index: 7;
+  right: 16px;
+  bottom: 30%;
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 5vw, 48px);
+  height: clamp(34px, 5vw, 48px);
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff7cf 0%, #ffe281 100%);
+  color: #f45d86;
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 6px 0 rgba(49, 95, 167, 0.14);
+  pointer-events: none;
+  animation: obstacleWarning 1.08s ease-out both;
+}
+
 .item-collected {
   animation: collect 0.28s ease-out forwards;
 }
@@ -1142,6 +1413,59 @@ h2 {
 @keyframes flowerSpin {
   100% {
     transform: rotate(var(--flower-rotate));
+  }
+}
+
+@keyframes appleSparkle {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--sparkle-x)),
+        calc(-50% + var(--sparkle-y))
+      )
+      scale(1.12);
+  }
+}
+
+@keyframes rarePizzaGlow {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rarePizzaStar {
+  from {
+    transform: scale(0.9) rotate(-8deg);
+  }
+  to {
+    transform: scale(1.16) rotate(10deg);
+  }
+}
+
+@keyframes obstacleWarning {
+  0% {
+    opacity: 0;
+    transform: translateX(10px) scale(0.65);
+  }
+  22%,
+  72% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.92);
   }
 }
 
@@ -1204,6 +1528,22 @@ h2 {
   }
 }
 
+@keyframes rarePizzaNotice {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+  18%,
+  76% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(1.03);
+  }
+}
+
 @keyframes stageBanner {
   0% {
     opacity: 0;
@@ -1236,17 +1576,30 @@ h2 {
   }
 }
 
-@keyframes clearConfetti {
+@keyframes clearSparkle {
   0% {
-    opacity: 0;
-    transform: translateY(-12%) rotate(0deg);
+    opacity: 0.35;
+    transform: scale(0.98);
   }
-  10% {
-    opacity: 0.95;
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
   }
   100% {
-    opacity: 0;
-    transform: translateY(62%) rotate(18deg);
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes finalTwinkle {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.92) rotate(var(--twinkle-rotate, 0deg));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12) rotate(var(--twinkle-rotate, 0deg));
   }
 }
 
@@ -1306,6 +1659,20 @@ h2 {
   .score-icon {
     width: 19px;
     height: 16px;
+  }
+
+  .guard-status {
+    top: max(58px, calc(env(safe-area-inset-top) + 54px));
+    right: 10px;
+    padding: 6px 9px;
+    border-width: 3px;
+    font-size: 11px;
+  }
+
+  .rare-pizza-notice {
+    left: 12px;
+    top: max(60px, calc(env(safe-area-inset-top) + 56px));
+    font-size: 14px;
   }
 
   .cat {
@@ -1457,6 +1824,17 @@ h2 {
     font-size: 14px;
   }
 
+  .final-actions {
+    gap: 9px;
+  }
+
+  .award-button {
+    min-width: 148px;
+    min-height: 46px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
   .game-over-screen.clear-screen .final-panel {
     width: min(94vw, 400px);
     max-height: calc(100svh - 24px);
@@ -1502,5 +1880,25 @@ h2 {
     min-height: 40px;
     padding: 8px 16px;
     font-size: 13px;
+  }
+
+  .game-over-screen.award-screen .final-panel {
+    width: min(96vw, 430px);
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .award-card {
+    width: 100%;
+    border-width: 4px;
+    border-radius: 18px;
+  }
+
+  .award-score {
+    bottom: clamp(13px, 5vw, 26px);
+    min-width: 72%;
+    padding: 8px 14px;
+    border-width: 3px;
+    font-size: clamp(15px, 5vw, 22px);
   }
 }

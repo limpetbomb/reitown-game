@@ -19,10 +19,16 @@ const storyText = document.getElementById("storyText");
 const storyOkButton = document.getElementById("storyOkButton");
 const startButton = document.getElementById("startButton");
 const restartButton = document.getElementById("restartButton");
+const awardButton = document.getElementById("awardButton");
+const awardCard = document.getElementById("awardCard");
+const awardImage = document.getElementById("awardImage");
+const awardScore = document.getElementById("awardScore");
 const supporter = document.getElementById("supporter");
 const startTip = document.getElementById("startTip");
 const bonusBanner = document.getElementById("bonusBanner");
 const bonusStatus = document.getElementById("bonusStatus");
+const guardStatus = document.getElementById("guardStatus");
+const rarePizzaNotice = document.getElementById("rarePizzaNotice");
 let audioContext = null;
 
 const state = {
@@ -34,18 +40,30 @@ const state = {
   stageEncouraged: false,
   y: 0,
   velocity: 0,
+  jumpHeld: false,
+  jumpHoldTime: 0,
+  jumpBoostAvailable: false,
+  spaceDown: false,
   lastTime: 0,
   spawnTimer: 0,
   supportTimer: 0,
   pizzaBoostTimer: 0,
+  invincibleTimer: 0,
   appleGuard: 0,
+  pizzaCount: 0,
+  appleGuardUses: 0,
+  hazardContacts: 0,
+  award: null,
   obstacles: [],
   obstacleId: 0,
 };
 
 const physics = {
   gravity: 2000,
-  jumpPower: 920,
+  jumpPower: 980,
+  jumpStartPower: 720,
+  jumpHoldBoost: 1900,
+  jumpHoldMs: 210,
   groundY: 0,
   obstacleSpeed: 340,
   spawnEvery: 1700,
@@ -99,6 +117,8 @@ const itemTypes = [
   { name: "apple", className: "item-apple", kind: "guard", points: 0 },
   { name: "trash", className: "item-trash", kind: "hazard", points: 1 },
   { name: "pizza", className: "item-pizza", kind: "treat", points: 3 },
+  { name: "rarePizza", className: "item-pizza item-rare-pizza", kind: "rareTreat", points: 8 },
+  { name: "fastTrash", className: "item-trash item-trash-fast", kind: "hazard", points: 2, speedMultiplier: 1.32, warning: true },
 ];
 
 function resetGame() {
@@ -110,17 +130,29 @@ function resetGame() {
   state.stageEncouraged = false;
   state.y = 0;
   state.velocity = 0;
+  state.jumpHeld = false;
+  state.jumpHoldTime = 0;
+  state.jumpBoostAvailable = false;
+  state.spaceDown = false;
   state.lastTime = performance.now();
   state.spawnTimer = 5600;
   state.supportTimer = 18000;
   state.pizzaBoostTimer = 0;
+  state.invincibleTimer = 0;
   state.appleGuard = 0;
+  state.pizzaCount = 0;
+  state.appleGuardUses = 0;
+  state.hazardContacts = 0;
+  state.award = null;
   scoreValue.textContent = "0";
+  updateGuardStatus();
   setStage(0, false);
   cat.style.setProperty("--jump-y", "0px");
+  cat.classList.remove("cat-invincible");
   supporter.classList.remove("show");
   bonusBanner.classList.remove("show");
   bonusStatus.classList.remove("show");
+  rarePizzaNotice.classList.remove("show");
   storyModal.classList.add("hidden");
   showStartTip();
   window.setTimeout(() => {
@@ -135,6 +167,7 @@ function resetGame() {
   startScreen.classList.add("hidden");
   gameOverScreen.classList.add("hidden");
   gameOverScreen.classList.remove("clear-screen");
+  gameOverScreen.classList.remove("award-screen");
   setClearResult(false);
   requestAnimationFrame(update);
 }
@@ -149,14 +182,22 @@ function showStartTip() {
   }, 2350);
 }
 
-function jump() {
+function startJump() {
   if (!state.running || state.paused) {
     return;
   }
 
   if (state.y === physics.groundY) {
-    state.velocity = physics.jumpPower;
+    state.velocity = physics.jumpStartPower;
+    state.jumpHeld = true;
+    state.jumpHoldTime = 0;
+    state.jumpBoostAvailable = true;
   }
+}
+
+function endJump() {
+  state.jumpHeld = false;
+  state.jumpBoostAvailable = false;
 }
 
 function spawnObstacle() {
@@ -177,7 +218,7 @@ function spawnObstacle() {
     id: state.obstacleId++,
     element,
     type,
-    x: rect.width + 32,
+    x: rect.width + (type.warning ? 150 : 32),
     motion,
     motionTime: Math.random() * Math.PI * 2,
     passed: false,
@@ -185,21 +226,37 @@ function spawnObstacle() {
     removed: false,
   };
 
+  if (type.warning) {
+    showObstacleWarning();
+  }
+
   state.obstacles.push(obstacle);
 }
 
 function pickItemType() {
+  if (state.pizzaBoostTimer > 0 && Math.random() < 0.15) {
+    return itemTypes[4];
+  }
+
   if (state.pizzaBoostTimer > 0 && Math.random() < 0.72) {
     return itemTypes[3];
   }
 
   const roll = Math.random();
 
-  if (roll < 0.24) {
+  if (roll < 0.08) {
+    return itemTypes[4];
+  }
+
+  if (state.stageIndex === 2 && roll < 0.24) {
+    return itemTypes[5];
+  }
+
+  if (roll < 0.34) {
     return itemTypes[3];
   }
 
-  if (roll < 0.3) {
+  if (roll < 0.44) {
     return itemTypes[1];
   }
 
@@ -211,7 +268,7 @@ function pickItemType() {
 }
 
 function pickItemMotion(type) {
-  if (type.name !== "trash") {
+  if (type.name !== "trash" && type.name !== "fastTrash") {
     return { className: "", bob: 0, spin: 0, frequency: 0 };
   }
 
@@ -260,7 +317,9 @@ function update(time) {
 function updateSupporter(delta) {
   state.supportTimer -= delta * 1000;
   state.pizzaBoostTimer = Math.max(0, state.pizzaBoostTimer - delta * 1000);
+  state.invincibleTimer = Math.max(0, state.invincibleTimer - delta * 1000);
   bonusStatus.classList.toggle("show", state.pizzaBoostTimer > 0);
+  cat.classList.toggle("cat-invincible", state.invincibleTimer > 0);
 
   if (state.supportTimer <= 0) {
     showSupporter();
@@ -299,10 +358,23 @@ function startPizzaBonus() {
 
 function updateCat(delta) {
   state.velocity -= physics.gravity * delta;
+
+  if (state.jumpHeld && state.jumpBoostAvailable) {
+    state.jumpHoldTime += delta * 1000;
+
+    if (state.jumpHoldTime <= physics.jumpHoldMs && state.velocity > 0) {
+      state.velocity += physics.jumpHoldBoost * delta;
+      state.velocity = Math.min(state.velocity, physics.jumpPower);
+    } else {
+      state.jumpBoostAvailable = false;
+    }
+  }
+
   state.y = Math.max(physics.groundY, state.y + state.velocity * delta);
 
   if (state.y === physics.groundY && state.velocity < 0) {
     state.velocity = 0;
+    state.jumpBoostAvailable = false;
   }
 
   cat.style.setProperty("--jump-y", `${-state.y}px`);
@@ -323,7 +395,7 @@ function updateObstacles(delta) {
       return;
     }
 
-    obstacle.x -= speed * delta;
+    obstacle.x -= speed * (obstacle.type.speedMultiplier || 1) * delta;
     obstacle.motionTime += delta * obstacle.motion.frequency;
     const y = obstacle.motion.bob ? Math.abs(Math.sin(obstacle.motionTime)) * -obstacle.motion.bob : 0;
     const rotate = obstacle.motion.spin ? Math.sin(obstacle.motionTime) * obstacle.motion.spin : 0;
@@ -362,10 +434,12 @@ function checkCollisions() {
 
     const obstacleBox = shrinkRect(obstacle.element.getBoundingClientRect(), 0.12, 0.1, 0.12, 0.08);
     if (rectsOverlap(catBox, obstacleBox)) {
-      if (obstacle.type.kind === "treat") {
+      if (obstacle.type.kind === "treat" || obstacle.type.kind === "rareTreat") {
         collectTreat(obstacle);
       } else if (obstacle.type.kind === "guard") {
         collectGuard(obstacle);
+      } else if (state.invincibleTimer > 0) {
+        avoidWithRarePizza(obstacle);
       } else if (state.appleGuard > 0) {
         useAppleGuard(obstacle);
       } else {
@@ -381,7 +455,8 @@ function collectGuard(obstacle) {
   obstacle.element.classList.add("item-collected");
   state.appleGuard = Math.min(state.appleGuard + 1, 1);
   playHealSound();
-  celebrateCat();
+  updateGuardStatus();
+  burstAppleSparkles();
 
   window.setTimeout(() => {
     obstacle.removed = true;
@@ -391,10 +466,13 @@ function collectGuard(obstacle) {
 
 function useAppleGuard(obstacle) {
   state.appleGuard = Math.max(0, state.appleGuard - 1);
+  state.appleGuardUses += 1;
+  state.hazardContacts += 1;
   obstacle.collected = true;
   obstacle.element.classList.add("item-collected");
+  updateGuardStatus();
   showStageNotice("りんごのおまもりでセーフ！");
-  burstFlowers();
+  burstAppleSparkles();
 
   window.setTimeout(() => {
     obstacle.removed = true;
@@ -402,17 +480,88 @@ function useAppleGuard(obstacle) {
   }, 280);
 }
 
+function burstAppleSparkles() {
+  const sparkles = [
+    { x: "-42px", y: "-42px", left: "28%", top: "38%", size: "14px", color: "#ff8faf" },
+    { x: "-10px", y: "-68px", left: "46%", top: "28%", size: "11px", color: "#9ddf8a" },
+    { x: "32px", y: "-56px", left: "62%", top: "34%", size: "15px", color: "#ffbd3f" },
+    { x: "54px", y: "-20px", left: "70%", top: "52%", size: "12px", color: "#70bf78" },
+    { x: "-50px", y: "-8px", left: "28%", top: "56%", size: "10px", color: "#ff7a8a" },
+  ];
+
+  sparkles.forEach((sparkle) => {
+    const element = document.createElement("span");
+    element.className = "apple-sparkle";
+    element.style.setProperty("--sparkle-color", sparkle.color);
+    element.style.setProperty("--sparkle-x", sparkle.x);
+    element.style.setProperty("--sparkle-y", sparkle.y);
+    element.style.setProperty("--sparkle-left", sparkle.left);
+    element.style.setProperty("--sparkle-top", sparkle.top);
+    element.style.setProperty("--sparkle-size", sparkle.size);
+    cat.appendChild(element);
+
+    window.setTimeout(() => {
+      element.remove();
+    }, 820);
+  });
+}
+
 function collectTreat(obstacle) {
   obstacle.collected = true;
   obstacle.element.classList.add("item-collected");
   playCollectSound();
+  state.pizzaCount += obstacle.type.kind === "rareTreat" ? 2 : 1;
   addScore(obstacle.type.points);
-  celebrateCat();
+
+  if (obstacle.type.kind === "rareTreat") {
+    startRarePizzaBonus();
+  } else {
+    celebrateCat();
+  }
 
   window.setTimeout(() => {
     obstacle.removed = true;
     obstacle.element.remove();
   }, 280);
+}
+
+function avoidWithRarePizza(obstacle) {
+  obstacle.collected = true;
+  obstacle.element.classList.add("item-collected");
+  showStageNotice("レアピザパワーでセーフ！");
+
+  window.setTimeout(() => {
+    obstacle.removed = true;
+    obstacle.element.remove();
+  }, 280);
+}
+
+function startRarePizzaBonus() {
+  state.invincibleTimer = 3800;
+  cat.classList.add("cat-invincible");
+  rarePizzaNotice.classList.remove("show");
+  void rarePizzaNotice.offsetWidth;
+  rarePizzaNotice.classList.add("show");
+  celebrateCat();
+
+  window.setTimeout(() => {
+    rarePizzaNotice.classList.remove("show");
+  }, 1700);
+}
+
+function updateGuardStatus() {
+  guardStatus.hidden = state.appleGuard <= 0;
+}
+
+function showObstacleWarning() {
+  const warning = document.createElement("span");
+  warning.className = "obstacle-warning";
+  warning.textContent = "!";
+  game.appendChild(warning);
+
+  window.setTimeout(() => {
+    warning.remove();
+  }, 1080);
 }
 
 function celebrateCat() {
@@ -577,6 +726,7 @@ function rectsOverlap(a, b) {
 }
 
 function endGame() {
+  state.hazardContacts += 1;
   state.running = false;
   state.gameOver = true;
   state.paused = false;
@@ -587,6 +737,7 @@ function endGame() {
   finalTitleMain.textContent = "すごい！";
   finalTitleSub.textContent = "よくよけたね！";
   finalScore.textContent = state.score;
+  prepareAwardResult();
   setClearResult(false);
   gameOverScreen.classList.remove("clear-screen");
   gameOverScreen.classList.remove("hidden");
@@ -605,6 +756,7 @@ function completeGame() {
   finalTitleMain.textContent = "とうちゃく！";
   finalTitleSub.textContent = "ピザパーティーだよ！";
   finalScore.textContent = state.score;
+  prepareAwardResult();
   setClearResult(true);
   gameOverScreen.classList.add("clear-screen");
   gameOverScreen.classList.remove("hidden");
@@ -614,6 +766,47 @@ function setClearResult(isClear) {
   finalTitleDefault.hidden = isClear;
   finalTitleClear.hidden = !isClear;
   clearParty.hidden = !isClear;
+  awardCard.hidden = true;
+  awardButton.hidden = !isClear;
+  gameOverScreen.classList.remove("award-screen");
+}
+
+function prepareAwardResult() {
+  const award = decideAward();
+  state.award = award;
+  awardImage.src = award.image;
+  awardImage.alt = award.name;
+  awardScore.textContent = `あなたのスコア：${state.score}`;
+}
+
+function decideAward() {
+  if (state.hazardContacts === 0 && state.appleGuardUses === 0) {
+    return {
+      name: "ノーダメおでかけ賞",
+      image: "assets/award_nodamage.png",
+    };
+  }
+
+  if (state.pizzaCount >= 18) {
+    return {
+      name: "ピザだいすき賞",
+      image: "assets/award_pizza.png",
+    };
+  }
+
+  return {
+    name: "よけよけ名人で賞",
+    image: "assets/award_dodge.png",
+  };
+}
+
+function showAwardResult() {
+  if (!state.award) {
+    prepareAwardResult();
+  }
+
+  awardCard.hidden = false;
+  gameOverScreen.classList.add("award-screen");
 }
 
 function getAudioContext() {
@@ -687,13 +880,17 @@ function handleAction(event) {
     return;
   }
 
-  jump();
+  startJump();
 }
 
 startButton.addEventListener("click", resetGame);
 restartButton.addEventListener("click", resetGame);
+awardButton.addEventListener("click", showAwardResult);
 storyOkButton.addEventListener("click", closeStoryPopup);
 game.addEventListener("pointerdown", handleAction);
+game.addEventListener("pointerup", endJump);
+game.addEventListener("pointercancel", endJump);
+game.addEventListener("pointerleave", endJump);
 
 window.addEventListener("keydown", (event) => {
   if (event.code !== "Space") {
@@ -712,5 +909,17 @@ window.addEventListener("keydown", (event) => {
     return;
   }
 
-  jump();
+  if (!state.spaceDown) {
+    state.spaceDown = true;
+    startJump();
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  if (event.code !== "Space") {
+    return;
+  }
+
+  state.spaceDown = false;
+  endJump();
 });

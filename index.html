@@ -25,6 +25,11 @@
           </p>
         </header>
 
+        <p class="guard-status" id="guardStatus" hidden aria-live="polite">
+          <span class="guard-apple" aria-hidden="true"></span>
+          りんごのおまもり
+        </p>
+
         <div class="start-tip" id="startTip" aria-live="polite">
           <img src="assets/start_tip.png" alt="タップしてしょうがいぶつをよけよう！">
         </div>
@@ -38,6 +43,8 @@
           <img class="stage-banner-image" id="stageBannerImage" src="assets/stage_goal_1.png" alt="ステージ1 目標スコア50" hidden>
           <span class="stage-banner-text" id="stageBannerText">ステージ1 おでかけ道</span>
         </div>
+
+        <p class="rare-pizza-notice" id="rarePizzaNotice" aria-live="polite">レアピザだ！</p>
 
         <div class="supporter" id="supporter" aria-hidden="true">
           <p class="supporter-speech">れいちゃん、ピザやけたよ〜！</p>
@@ -87,7 +94,14 @@
               <span class="final-score-label">スコア</span>
               <span class="final-score-number" id="finalScore">0</span>
             </p>
-            <button class="primary-button final-restart" id="restartButton" type="button">もういちど遊ぶ</button>
+            <figure class="award-card" id="awardCard" hidden>
+              <img id="awardImage" src="assets/award_dodge.png" alt="今回の称号">
+              <figcaption class="award-score" id="awardScore">あなたのスコア：0</figcaption>
+            </figure>
+            <div class="final-actions">
+              <button class="primary-button final-restart" id="restartButton" type="button">もういちど遊ぶ</button>
+              <button class="primary-button award-button" id="awardButton" type="button">称号をみる</button>
+            </div>
           </div>
         </section>
 
