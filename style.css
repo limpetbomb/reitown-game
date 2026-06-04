@@ -161,11 +161,11 @@ button {
   place-items: center;
   width: clamp(330px, 44vw, 470px);
   min-height: clamp(86px, 11vw, 118px);
-  padding: 34px 96px 22px 86px;
+  padding: 32px 84px 21px 76px;
   border-radius: 0;
   background: url("assets/stage_sign_wide.png") center / contain no-repeat;
   color: #315fa7;
-  font-size: clamp(11px, 1.35vw, 15px);
+  font-size: clamp(18px, 2.2vw, 25px);
   text-shadow:
     0 2px 0 #ffffff,
     2px 0 0 #ffffff,
@@ -1289,8 +1289,8 @@ h2 {
     max-width: 64vw;
     min-height: 62px;
     overflow: visible;
-    padding: 22px 62px 14px 54px;
-    font-size: 9px;
+    padding: 21px 52px 13px 46px;
+    font-size: clamp(13px, 4vw, 18px);
     text-overflow: ellipsis;
     transform: translateY(-6px);
   }

@@ -52,6 +52,7 @@ const physics = {
 };
 
 const goalScore = 200;
+const stageStartGraceMs = 3200;
 const stageOneStory = `れいちゃんはピザパーティーへおでかけ中
 石とゴミをよけて、ピザとりんごを集めよう
 だいすが応援してくれると、ピザがいっぱいになるよ！`;
@@ -225,6 +226,11 @@ function pickItemMotion(type) {
 
 function currentStage() {
   return stages[state.stageIndex];
+}
+
+function clearObstacles() {
+  state.obstacles.forEach((obstacle) => obstacle.element.remove());
+  state.obstacles = [];
 }
 
 function update(time) {
@@ -539,6 +545,8 @@ function showStageNotice(message) {
 function showStoryPopup(index) {
   const stage = stages[index];
   state.paused = true;
+  clearObstacles();
+  state.spawnTimer = stageStartGraceMs;
   storyStageImage.src = stage.image;
   storyStageImage.alt = `${stage.label} 目標スコア${stage.target}`;
   storyText.textContent = stage.story;
@@ -548,6 +556,7 @@ function showStoryPopup(index) {
 function closeStoryPopup() {
   storyModal.classList.add("hidden");
   state.paused = false;
+  state.spawnTimer = stageStartGraceMs;
   state.lastTime = performance.now();
 }
 
