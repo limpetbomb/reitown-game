@@ -23,6 +23,7 @@ const supporter = document.getElementById("supporter");
 const startTip = document.getElementById("startTip");
 const bonusBanner = document.getElementById("bonusBanner");
 const bonusStatus = document.getElementById("bonusStatus");
+let audioContext = null;
 
 const state = {
   running: false,
@@ -83,8 +84,8 @@ const stages = [
     shortLabel: "パーティー前",
     from: 100,
     target: 200,
-    speed: 430,
-    spawnEvery: 1180,
+    speed: 560,
+    spawnEvery: 860,
     image: "assets/stage_goal_3.png",
     story: `パーティー会場が見えてきたよ
 さいごの道は流れが早いから、ジャンプのタイミングがだいじ！
@@ -339,7 +340,10 @@ function updateObstacles(delta) {
 }
 
 function scaledObstacleSpeed(gameWidth) {
-  return Math.max(285, Math.min(currentStage().speed, gameWidth * 0.62));
+  const stage = currentStage();
+  const widthLimit = gameWidth * (state.stageIndex === 2 ? 1.05 : 0.68);
+
+  return Math.max(285, Math.min(stage.speed, widthLimit));
 }
 
 function checkCollisions() {
@@ -370,6 +374,7 @@ function collectGuard(obstacle) {
   obstacle.collected = true;
   obstacle.element.classList.add("item-collected");
   state.appleGuard = Math.min(state.appleGuard + 1, 1);
+  playHealSound();
   celebrateCat();
 
   window.setTimeout(() => {
@@ -394,6 +399,7 @@ function useAppleGuard(obstacle) {
 function collectTreat(obstacle) {
   obstacle.collected = true;
   obstacle.element.classList.add("item-collected");
+  playCollectSound();
   addScore(obstacle.type.points);
   celebrateCat();
 
@@ -483,7 +489,7 @@ function setStage(index, announce) {
   state.stageEncouraged = false;
   const stage = stages[index];
   game.dataset.stage = String(index + 1);
-  stageLabel.textContent = `${stage.shortLabel} / 目標${stage.target}`;
+  stageLabel.textContent = stage.shortLabel;
 
   if (announce) {
     showStageIntro(index);
@@ -599,6 +605,64 @@ function setClearResult(isClear) {
   finalTitleDefault.hidden = isClear;
   finalTitleClear.hidden = !isClear;
   clearParty.hidden = !isClear;
+}
+
+function getAudioContext() {
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+      return null;
+    }
+
+    audioContext = new AudioContextClass();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+
+  return audioContext;
+}
+
+function playTone(frequency, start, duration, volume = 0.05, type = "sine") {
+  const context = getAudioContext();
+
+  if (!context) {
+    return;
+  }
+
+  const oscillator = context.createOscillator();
+  const gain = context.createGain();
+  const startTime = context.currentTime + start;
+
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency, startTime);
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+  oscillator.connect(gain);
+  gain.connect(context.destination);
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration + 0.02);
+}
+
+function playCollectSound() {
+  playTone(660, 0, 0.1, 0.045, "triangle");
+  playTone(990, 0.07, 0.12, 0.04, "triangle");
+}
+
+function playHealSound() {
+  const context = getAudioContext();
+
+  if (!context) {
+    return;
+  }
+
+  [523, 659, 784, 1046].forEach((frequency, index) => {
+    playTone(frequency, index * 0.055, 0.14, 0.04, "sine");
+  });
 }
 
 function handleAction(event) {

@@ -199,13 +199,13 @@ button {
 .stage-pill {
   display: grid;
   place-items: center;
-  width: clamp(260px, 38vw, 380px);
-  min-height: clamp(68px, 9.5vw, 96px);
-  padding: 26px 62px 16px 52px;
+  width: clamp(300px, 42vw, 430px);
+  min-height: clamp(78px, 10.5vw, 108px);
+  padding: 31px 90px 19px 78px;
   border-radius: 0;
-  background: url("assets/stage_sign.png") center / contain no-repeat;
+  background: url("assets/stage_sign_wide.png") center / contain no-repeat;
   color: #315fa7;
-  font-size: clamp(10px, 1.35vw, 13px);
+  font-size: clamp(10px, 1.25vw, 13px);
   text-shadow:
     0 2px 0 #ffffff,
     2px 0 0 #ffffff,
@@ -213,6 +213,9 @@ button {
     0 -2px 0 #ffffff;
   white-space: nowrap;
   box-shadow: none;
+  overflow: visible;
+  text-overflow: ellipsis;
+  transform: translateY(-8px);
 }
 
 .score {
@@ -565,8 +568,10 @@ h1 {
   border: 7px solid #ffffff;
   border-radius: 34px;
   background:
-    radial-gradient(circle at 14% 20%, rgba(255, 143, 175, 0.24) 0 3%, transparent 3.2%),
-    radial-gradient(circle at 88% 28%, rgba(143, 200, 255, 0.3) 0 3%, transparent 3.2%),
+    radial-gradient(circle at 18% 24%, rgba(255, 143, 175, 0.22) 0 3%, transparent 3.2%),
+    radial-gradient(circle at 82% 24%, rgba(143, 200, 255, 0.28) 0 3%, transparent 3.2%),
+    radial-gradient(circle at 28% 74%, rgba(255, 226, 129, 0.2) 0 2.4%, transparent 2.6%),
+    radial-gradient(circle at 72% 74%, rgba(157, 223, 138, 0.18) 0 2.4%, transparent 2.6%),
     linear-gradient(180deg, rgba(255, 251, 226, 0.98), rgba(232, 247, 255, 0.98));
   box-shadow: 0 10px 0 rgba(49, 95, 167, 0.15), 0 22px 42px rgba(49, 95, 167, 0.16);
 }
@@ -667,9 +672,9 @@ h2 {
 .clear-party {
   position: relative;
   z-index: 2;
-  width: min(88%, 390px);
-  margin: -4px 0 0;
-  overflow: hidden;
+  width: min(90%, 430px);
+  margin: 0;
+  overflow: visible;
   border: 5px solid #ffffff;
   border-radius: 24px;
   background: #dff4ff;
@@ -679,17 +684,42 @@ h2 {
 .clear-party img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 7;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
 .game-over-screen.clear-screen .final-panel {
   width: min(92vw, 660px);
   max-height: calc(100% - 24px);
   min-height: 0;
-  gap: 8px;
+  gap: 10px;
   padding: clamp(12px, 2vw, 20px);
   align-content: center;
+}
+
+.game-over-screen.clear-screen .final-panel::before,
+.game-over-screen.clear-screen .final-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: -20% 0 auto;
+  height: 140%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, #ff8faf 0 4px, transparent 5px) 8% 0 / 80px 120px,
+    radial-gradient(circle, #8fc8ff 0 4px, transparent 5px) 36% 20px / 90px 130px,
+    radial-gradient(circle, #ffe281 0 4px, transparent 5px) 64% 10px / 86px 124px,
+    linear-gradient(35deg, transparent 0 42%, #9ddf8a 42% 58%, transparent 58%) 20% 0 / 70px 110px,
+    linear-gradient(-35deg, transparent 0 42%, #d7a2ff 42% 58%, transparent 58%) 78% 0 / 74px 118px;
+  opacity: 0;
+}
+
+.game-over-screen.clear-screen .final-panel::before {
+  animation: clearConfetti 4.8s linear infinite;
+}
+
+.game-over-screen.clear-screen .final-panel::after {
+  animation: clearConfetti 4.8s linear 2.4s infinite;
 }
 
 .game-over-screen.clear-screen .final-title {
@@ -1248,6 +1278,20 @@ h2 {
   }
 }
 
+@keyframes clearConfetti {
+  0% {
+    opacity: 0;
+    transform: translateY(-12%) rotate(0deg);
+  }
+  10% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(62%) rotate(18deg);
+  }
+}
+
 @keyframes collect {
   to {
     opacity: 0;
@@ -1283,13 +1327,14 @@ h2 {
   }
 
   .stage-pill {
-    width: clamp(174px, 52vw, 236px);
-    max-width: 54vw;
-    min-height: 48px;
-    overflow: hidden;
-    padding: 17px 38px 10px 32px;
+    width: clamp(200px, 58vw, 270px);
+    max-width: 60vw;
+    min-height: 56px;
+    overflow: visible;
+    padding: 20px 56px 12px 48px;
     font-size: 8px;
     text-overflow: ellipsis;
+    transform: translateY(-6px);
   }
 
   .score {
@@ -1458,8 +1503,8 @@ h2 {
     width: min(94vw, 400px);
     max-height: calc(100svh - 24px);
     min-height: 0;
-    gap: 6px;
-    padding: 10px;
+    gap: 8px;
+    padding: 12px 10px;
   }
 
   .game-over-screen.clear-screen .final-title {
@@ -1467,15 +1512,15 @@ h2 {
   }
 
   .clear-party {
-    width: min(88%, 300px);
-    margin: -2px 0 0;
+    width: min(90%, 310px);
+    margin: 0;
     border-width: 4px;
     border-radius: 18px;
   }
 
   .clear-party img {
-    aspect-ratio: 16 / 7;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
   }
 
   .game-over-screen.clear-screen .final-score {
@@ -1495,6 +1540,7 @@ h2 {
   }
 
   .game-over-screen.clear-screen .final-restart {
+    margin-top: 4px;
     min-height: 40px;
     padding: 8px 16px;
     font-size: 13px;
