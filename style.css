@@ -161,7 +161,7 @@ button {
   place-items: center;
   width: clamp(330px, 44vw, 470px);
   min-height: clamp(86px, 11vw, 118px);
-  padding: 32px 84px 21px 76px;
+  padding: 35px 84px 18px 76px;
   border-radius: 0;
   background: url("assets/stage_sign_wide.png") center / contain no-repeat;
   color: #315fa7;
@@ -728,11 +728,11 @@ h2 {
 }
 
 .game-over-screen.clear-screen .final-panel {
-  width: min(92vw, 660px);
-  max-height: calc(100% - 24px);
+  width: min(88vw, 580px);
+  max-height: calc(100% - 16px);
   min-height: 0;
-  gap: 10px;
-  padding: clamp(12px, 2vw, 20px);
+  gap: 6px;
+  padding: clamp(8px, 1.4vw, 14px);
   align-content: center;
 }
 
@@ -798,7 +798,7 @@ h2 {
 }
 
 .game-over-screen.clear-screen .final-title {
-  width: min(54%, 320px);
+  width: min(42%, 240px);
 }
 
 .game-over-screen.clear-screen .final-title-default {
@@ -812,22 +812,38 @@ h2 {
 
 .game-over-screen.clear-screen .final-score {
   min-height: auto;
-  width: min(62%, 230px);
-  padding: 6px 12px;
+  width: min(52%, 190px);
+  padding: 4px 10px;
   grid-template-columns: auto auto;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .game-over-screen.clear-screen .final-score-label {
-  padding: 4px 14px;
-  font-size: clamp(13px, 2.2vw, 18px);
+  padding: 3px 12px;
+  font-size: clamp(12px, 1.8vw, 15px);
 }
 
 .game-over-screen.clear-screen .final-score-number {
-  min-width: 60px;
-  padding: 0 8px;
-  font-size: clamp(30px, 5vw, 44px);
+  min-width: 48px;
+  padding: 0 6px;
+  font-size: clamp(24px, 4vw, 34px);
+}
+
+.game-over-screen.clear-screen .clear-party {
+  width: min(72%, 340px);
+  border-width: 4px;
+  border-radius: 18px;
+  box-shadow: 0 5px 0 rgba(49, 95, 167, 0.14);
+}
+
+.game-over-screen.clear-screen .final-restart,
+.game-over-screen.clear-screen .award-button,
+.game-over-screen.clear-screen .share-button {
+  min-height: 42px;
+  min-width: 168px;
+  padding: 9px 18px;
+  font-size: 14px;
 }
 
 .game-over-screen.award-screen .final-title,
@@ -836,10 +852,26 @@ h2 {
   display: none !important;
 }
 
+.game-over-screen.award-screen .award-button {
+  display: none;
+}
+
 .game-over-screen.award-screen .final-panel {
   width: min(94vw, 760px);
   gap: 12px;
   padding: clamp(10px, 1.8vw, 16px);
+}
+
+.game-over-screen.award-screen .final-actions {
+  gap: 10px;
+}
+
+.game-over-screen.award-screen .final-restart,
+.game-over-screen.award-screen .share-button {
+  min-height: 42px;
+  min-width: 168px;
+  padding: 9px 18px;
+  font-size: 14px;
 }
 
 .award-card {
@@ -934,7 +966,8 @@ h2 {
 }
 
 .final-restart,
-.award-button {
+.award-button,
+.share-button {
   position: relative;
   left: auto;
   top: auto;
@@ -955,6 +988,12 @@ h2 {
 .award-button {
   background: linear-gradient(180deg, #8fc8ff 0%, #5ca4ee 100%);
   box-shadow: 0 8px 0 #417fc5, 0 16px 28px rgba(65, 127, 197, 0.22);
+}
+
+.share-button {
+  background: linear-gradient(180deg, #ffe281 0%, #ffbd3f 100%);
+  color: #8a5a16;
+  box-shadow: 0 8px 0 #d49126, 0 16px 28px rgba(212, 145, 38, 0.22);
 }
 
 .final-decoration {
@@ -1642,7 +1681,7 @@ h2 {
     max-width: 64vw;
     min-height: 62px;
     overflow: visible;
-    padding: 21px 52px 13px 46px;
+    padding: 23px 52px 11px 46px;
     font-size: clamp(13px, 4vw, 18px);
     text-overflow: ellipsis;
     transform: translateY(-6px);
@@ -1829,6 +1868,13 @@ h2 {
   }
 
   .award-button {
+    min-width: 148px;
+    min-height: 46px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .share-button {
     min-width: 148px;
     min-height: 46px;
     padding: 10px 14px;

@@ -20,6 +20,7 @@ const storyOkButton = document.getElementById("storyOkButton");
 const startButton = document.getElementById("startButton");
 const restartButton = document.getElementById("restartButton");
 const awardButton = document.getElementById("awardButton");
+const shareButton = document.getElementById("shareButton");
 const awardCard = document.getElementById("awardCard");
 const awardImage = document.getElementById("awardImage");
 const awardScore = document.getElementById("awardScore");
@@ -768,6 +769,8 @@ function setClearResult(isClear) {
   clearParty.hidden = !isClear;
   awardCard.hidden = true;
   awardButton.hidden = !isClear;
+  shareButton.hidden = true;
+  shareButton.textContent = "SNSに投稿";
   gameOverScreen.classList.remove("award-screen");
 }
 
@@ -806,7 +809,50 @@ function showAwardResult() {
   }
 
   awardCard.hidden = false;
+  awardButton.hidden = true;
+  shareButton.hidden = false;
   gameOverScreen.classList.add("award-screen");
+}
+
+async function shareAwardResult() {
+  const awardName = state.award ? state.award.name : decideAward().name;
+  const shareText = `よけて！れいたうんで「${awardName}」だったよ！ あなたのスコア：${state.score}`;
+  const shareData = {
+    title: "よけて！れいたうん",
+    text: shareText,
+    url: window.location.href,
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      return;
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        return;
+      }
+    }
+  }
+
+  try {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
+      shareButton.textContent = "コピーしたよ";
+
+      window.setTimeout(() => {
+        shareButton.textContent = "SNSに投稿";
+      }, 1400);
+      return;
+    }
+  } catch (error) {
+    // Clipboard access can be blocked on some browsers; show a gentle fallback state.
+  }
+
+  shareButton.textContent = "コピーできなかった";
+
+  window.setTimeout(() => {
+    shareButton.textContent = "SNSに投稿";
+  }, 1400);
 }
 
 function getAudioContext() {
@@ -886,6 +932,7 @@ function handleAction(event) {
 startButton.addEventListener("click", resetGame);
 restartButton.addEventListener("click", resetGame);
 awardButton.addEventListener("click", showAwardResult);
+shareButton.addEventListener("click", shareAwardResult);
 storyOkButton.addEventListener("click", closeStoryPopup);
 game.addEventListener("pointerdown", handleAction);
 game.addEventListener("pointerup", endJump);
