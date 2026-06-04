@@ -48,6 +48,62 @@ button {
   touch-action: manipulation;
 }
 
+.game::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  height: 28%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 88%, rgba(143, 200, 255, 0.48) 0 18%, transparent 18.5%),
+    radial-gradient(ellipse at 42% 92%, rgba(157, 223, 138, 0.42) 0 20%, transparent 20.5%),
+    radial-gradient(ellipse at 76% 90%, rgba(143, 200, 255, 0.38) 0 17%, transparent 17.5%);
+}
+
+.game[data-stage="2"] {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 6%, transparent 6% 13%, rgba(255, 255, 255, 0.18) 13% 18%, transparent 18%),
+    linear-gradient(180deg, #c8f4ff 0%, #f2fbff 62%, #fff1c8 63%, #f4d184 100%);
+  background-size: 160px 160px, 100% 100%;
+}
+
+.game[data-stage="2"]::after {
+  height: 34%;
+  background:
+    linear-gradient(to top, rgba(143, 200, 255, 0.62) 0 48%, transparent 48%) 68% 100% / 72px 128px no-repeat,
+    linear-gradient(to top, rgba(143, 200, 255, 0.48) 0 52%, transparent 52%) 49% 100% / 58px 104px no-repeat,
+    linear-gradient(to top, rgba(143, 200, 255, 0.55) 0 44%, transparent 44%) 82% 100% / 48px 88px no-repeat,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0 8px, transparent 8px 18px) 67% 58% / 24px 24px repeat-y,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.48) 0 7px, transparent 7px 17px) 49% 60% / 22px 22px repeat-y,
+    radial-gradient(ellipse at 18% 94%, rgba(157, 223, 138, 0.34) 0 18%, transparent 18.5%);
+  opacity: 0.88;
+}
+
+.game[data-stage="3"] {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 6%, transparent 6% 12%, rgba(255, 255, 255, 0.16) 12% 18%, transparent 18%),
+    linear-gradient(180deg, #ffd6e8 0%, #fff3d9 61%, #ffe3ad 62%, #efbd77 100%);
+  background-size: 130px 130px, 100% 100%;
+}
+
+.game[data-stage="3"]::after {
+  height: 38%;
+  background:
+    radial-gradient(circle at 12% 20%, #ff8faf 0 5px, transparent 6px),
+    radial-gradient(circle at 20% 28%, #ffe281 0 5px, transparent 6px),
+    radial-gradient(circle at 28% 20%, #8fc8ff 0 5px, transparent 6px),
+    radial-gradient(circle at 36% 28%, #ff8faf 0 5px, transparent 6px),
+    radial-gradient(circle at 44% 20%, #ffe281 0 5px, transparent 6px),
+    linear-gradient(135deg, transparent 0 42%, rgba(255, 143, 175, 0.42) 42% 58%, transparent 58%) 70% 78% / 120px 92px no-repeat,
+    linear-gradient(225deg, transparent 0 42%, rgba(255, 226, 129, 0.58) 42% 58%, transparent 58%) 70% 78% / 120px 92px no-repeat,
+    radial-gradient(ellipse at 76% 96%, rgba(255, 247, 207, 0.68) 0 22%, transparent 22.5%),
+    radial-gradient(ellipse at 34% 96%, rgba(143, 200, 255, 0.3) 0 16%, transparent 16.5%);
+  opacity: 0.92;
+}
+
 .sky,
 .world,
 .screen {
@@ -115,6 +171,7 @@ button {
 }
 
 .mini-title,
+.stage-pill,
 .score {
   margin: 0;
   border-radius: 999px;
@@ -128,6 +185,25 @@ button {
 .mini-title {
   padding: 7px 12px;
   font-size: clamp(12px, 2vw, 16px);
+}
+
+.stage-pill {
+  display: grid;
+  place-items: center;
+  width: clamp(260px, 38vw, 380px);
+  min-height: clamp(68px, 9.5vw, 96px);
+  padding: 26px 62px 16px 52px;
+  border-radius: 0;
+  background: url("assets/stage_sign.png") center / contain no-repeat;
+  color: #315fa7;
+  font-size: clamp(10px, 1.35vw, 13px);
+  text-shadow:
+    0 2px 0 #ffffff,
+    2px 0 0 #ffffff,
+    -2px 0 0 #ffffff,
+    0 -2px 0 #ffffff;
+  white-space: nowrap;
+  box-shadow: none;
 }
 
 .score {
@@ -200,8 +276,8 @@ button {
   position: absolute;
   z-index: 7;
   left: 50%;
-  top: 45%;
-  width: min(92%, 720px);
+  top: 50%;
+  width: min(90%, 560px);
   margin: 0;
   opacity: 0;
   pointer-events: none;
@@ -212,7 +288,7 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(68vh, 500px);
+  max-height: min(78vh, 360px);
   object-fit: contain;
   filter: drop-shadow(0 12px 0 rgba(49, 95, 167, 0.1));
 }
@@ -247,7 +323,8 @@ button {
   position: absolute;
   z-index: 6;
   left: 50%;
-  top: 14px;
+  top: auto;
+  bottom: clamp(104px, 18vw, 150px);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -263,7 +340,7 @@ button {
   box-shadow: 0 5px 0 rgba(49, 95, 167, 0.13);
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -16px) scale(0.92);
+  transform: translate(-50%, 16px) scale(0.92);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -284,6 +361,88 @@ button {
 .bonus-status.show {
   opacity: 1;
   transform: translate(-50%, 0) scale(1);
+}
+
+.stage-banner {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 30%;
+  width: min(88%, 610px);
+  margin: 0;
+  padding: 14px 22px;
+  border: 5px solid #ffffff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff7cf 0%, #ffe281 100%);
+  color: #315fa7;
+  font-size: clamp(20px, 4.4vw, 36px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  box-shadow: 0 8px 0 rgba(49, 95, 167, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -18px) scale(0.88);
+}
+
+.stage-banner.has-image {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.stage-banner.compact {
+  left: auto;
+  right: 18px;
+  top: 64px;
+  width: auto;
+  max-width: min(58vw, 300px);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #f45d86;
+  font-size: clamp(13px, 2vw, 18px);
+  line-height: 1.25;
+  text-align: right;
+  text-shadow:
+    0 2px 0 #ffffff,
+    2px 0 0 #ffffff,
+    -2px 0 0 #ffffff,
+    0 -2px 0 #ffffff,
+    0 4px 0 rgba(49, 95, 167, 0.12);
+  box-shadow: none;
+  transform: translateY(-8px) scale(0.96);
+}
+
+.stage-banner-image {
+  display: block;
+  width: 100%;
+  max-height: min(42vh, 250px);
+  object-fit: contain;
+  filter: drop-shadow(0 10px 0 rgba(49, 95, 167, 0.1));
+}
+
+.stage-banner-text {
+  display: block;
+}
+
+.stage-banner.has-image .stage-banner-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.stage-banner.show {
+  animation: stageBanner 1.8s ease-out both;
+}
+
+.stage-banner.compact.show {
+  animation: compactNotice 1.35s ease-out both;
 }
 
 .supporter {
@@ -366,10 +525,66 @@ h1 {
 
 .title-logo {
   display: block;
-  width: min(88vw, 640px);
-  max-height: min(43vh, 300px);
+  width: min(90vw, 700px);
+  max-height: min(62vh, 360px);
   object-fit: contain;
   filter: drop-shadow(0 10px 0 rgba(49, 95, 167, 0.1));
+}
+
+.story-modal {
+  position: absolute;
+  z-index: 11;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(210, 239, 255, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.story-modal.hidden {
+  display: none;
+}
+
+.story-card {
+  position: relative;
+  width: min(90vw, 620px);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: clamp(14px, 2.5vw, 22px);
+  border: 7px solid #ffffff;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 14% 20%, rgba(255, 143, 175, 0.24) 0 3%, transparent 3.2%),
+    radial-gradient(circle at 88% 28%, rgba(143, 200, 255, 0.3) 0 3%, transparent 3.2%),
+    linear-gradient(180deg, rgba(255, 251, 226, 0.98), rgba(232, 247, 255, 0.98));
+  box-shadow: 0 10px 0 rgba(49, 95, 167, 0.15), 0 22px 42px rgba(49, 95, 167, 0.16);
+}
+
+.story-stage-image {
+  width: min(86%, 430px);
+  max-height: min(26vh, 170px);
+  object-fit: contain;
+  filter: drop-shadow(0 8px 0 rgba(49, 95, 167, 0.12));
+}
+
+.story-text {
+  width: min(96%, 520px);
+  margin: 0;
+  color: #315fa7;
+  font-size: clamp(13px, 2.1vw, 18px);
+  font-weight: 900;
+  line-height: 1.42;
+  text-align: center;
+  white-space: pre-line;
+  text-shadow: 0 2px 0 #ffffff;
+}
+
+.story-ok {
+  min-width: 122px;
+  min-height: 42px;
+  padding: 9px 20px;
 }
 
 .visually-hidden {
@@ -411,6 +626,9 @@ h2 {
   border: 7px solid #ffffff;
   border-radius: 34px;
   background:
+    radial-gradient(circle at 18% 28%, rgba(255, 143, 175, 0.22) 0 2%, transparent 2.2%),
+    radial-gradient(circle at 82% 32%, rgba(143, 200, 255, 0.28) 0 2.3%, transparent 2.5%),
+    radial-gradient(circle at 76% 78%, rgba(255, 196, 107, 0.26) 0 2%, transparent 2.2%),
     radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.94) 0 27%, transparent 28%),
     repeating-conic-gradient(from 0deg at 50% 42%, rgba(255, 226, 129, 0.28) 0deg 12deg, rgba(255, 247, 207, 0.6) 12deg 24deg),
     linear-gradient(180deg, #fff9dd 0%, #fff2bc 100%);
@@ -421,27 +639,79 @@ h2 {
 .final-title {
   position: relative;
   z-index: 2;
-  display: grid;
-  gap: 7px;
   margin: 0;
-  color: #f45d86;
-  font-family: "Hiragino Maru Gothic ProN", "Arial Rounded MT Bold", "Yu Gothic", "Meiryo", system-ui, sans-serif;
-  font-size: clamp(36px, 7.2vw, 62px);
-  font-weight: 900;
-  line-height: 0.98;
-  letter-spacing: 0;
-  text-shadow:
-    0 2px 0 #ffffff,
-    2px 0 0 #ffffff,
-    -2px 0 0 #ffffff,
-    0 -2px 0 #ffffff,
-    0 6px 0 rgba(49, 95, 167, 0.18),
-    0 11px 18px rgba(49, 95, 167, 0.14);
+  width: min(88%, 430px);
 }
 
-.final-title span:last-child {
-  color: #5f8ddd;
-  font-size: 0.74em;
+.final-title img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 0 rgba(49, 95, 167, 0.14));
+}
+
+.final-title-clear,
+.clear-party {
+  display: none;
+}
+
+.clear-party {
+  position: relative;
+  z-index: 2;
+  width: min(94%, 440px);
+  margin: -4px 0 0;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  border-radius: 24px;
+  background: #dff4ff;
+  box-shadow: 0 7px 0 rgba(49, 95, 167, 0.14);
+}
+
+.clear-party img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.game-over-screen.clear-screen .final-panel {
+  width: min(92vw, 660px);
+  min-height: min(78vh, 520px);
+  gap: 10px;
+  padding: clamp(14px, 2.8vw, 26px);
+}
+
+.game-over-screen.clear-screen .final-title {
+  width: min(82%, 480px);
+}
+
+.game-over-screen.clear-screen .final-title-default {
+  display: none;
+}
+
+.game-over-screen.clear-screen .final-title-clear,
+.game-over-screen.clear-screen .clear-party {
+  display: block;
+}
+
+.game-over-screen.clear-screen .final-score {
+  min-height: auto;
+  width: min(70%, 260px);
+  padding: 8px 14px;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-over-screen.clear-screen .final-score-label {
+  padding: 5px 16px;
+  font-size: clamp(14px, 2.5vw, 20px);
+}
+
+.game-over-screen.clear-screen .final-score-number {
+  min-width: 70px;
+  padding: 0 8px;
+  font-size: clamp(34px, 6vw, 52px);
 }
 
 .final-score {
@@ -515,7 +785,8 @@ h2 {
 }
 
 .final-star-a,
-.final-star-b {
+.final-star-b,
+.final-star-c {
   width: 28px;
   height: 28px;
   background: #ffe281;
@@ -535,8 +806,20 @@ h2 {
   transform: rotate(16deg);
 }
 
+.final-star-c {
+  left: 82%;
+  top: 62%;
+  width: 22px;
+  height: 22px;
+  background: #ff8faf;
+  transform: rotate(-12deg);
+}
+
 .final-confetti-a,
-.final-confetti-b {
+.final-confetti-b,
+.final-confetti-c,
+.final-confetti-d,
+.final-confetti-e {
   width: 34px;
   height: 8px;
   border-radius: 999px;
@@ -554,6 +837,50 @@ h2 {
   top: 34%;
   background: #ffbd3f;
   transform: rotate(24deg);
+}
+
+.final-confetti-c {
+  left: 22%;
+  bottom: 18%;
+  width: 28px;
+  background: #8fc8ff;
+  transform: rotate(18deg);
+}
+
+.final-confetti-d {
+  right: 22%;
+  bottom: 20%;
+  width: 26px;
+  background: #9ddf8a;
+  transform: rotate(-28deg);
+}
+
+.final-confetti-e {
+  left: 8%;
+  top: 66%;
+  width: 22px;
+  background: #d7a2ff;
+  transform: rotate(38deg);
+}
+
+.final-dot-a,
+.final-dot-b {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ff8faf;
+  box-shadow: 0 0 0 3px #ffffff;
+}
+
+.final-dot-a {
+  left: 14%;
+  top: 30%;
+}
+
+.final-dot-b {
+  right: 13%;
+  bottom: 32%;
+  background: #8fc8ff;
 }
 
 .primary-button {
@@ -714,6 +1041,24 @@ h2 {
   box-shadow: inset -5px -5px 0 rgba(68, 77, 93, 0.18), 0 6px 0 rgba(68, 77, 93, 0.1);
 }
 
+.item-trash-hop {
+  border-radius: 10px 10px 16px 12px;
+}
+
+.item-trash-roll {
+  width: clamp(38px, 6vw, 54px);
+  height: clamp(34px, 5.6vw, 50px);
+  border-radius: 45% 55% 48% 52%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.38) 0 13%, transparent 14%),
+    linear-gradient(145deg, #b9c4d0 0%, #7b8798 100%);
+}
+
+.item-trash-wobble {
+  border-radius: 14px 10px 18px 8px;
+  filter: drop-shadow(0 5px 0 rgba(68, 77, 93, 0.12));
+}
+
 .item-trash::before {
   top: -9px;
   left: 8px;
@@ -858,6 +1203,38 @@ h2 {
   }
 }
 
+@keyframes stageBanner {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -28px) scale(0.84);
+  }
+  18%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -18px) scale(1.04);
+  }
+}
+
+@keyframes compactNotice {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  18%,
+  76% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
 @keyframes collect {
   to {
     opacity: 0;
@@ -884,6 +1261,33 @@ h2 {
     top: max(12px, env(safe-area-inset-top));
     left: 12px;
     right: 12px;
+    gap: 6px;
+  }
+
+  .mini-title {
+    display: none;
+  }
+
+  .stage-pill {
+    width: clamp(230px, 66vw, 310px);
+    max-width: 68vw;
+    min-height: 62px;
+    overflow: hidden;
+    padding: 23px 48px 14px 42px;
+    font-size: 9px;
+    text-overflow: ellipsis;
+  }
+
+  .score {
+    min-width: 104px;
+    gap: 5px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .score-icon {
+    width: 19px;
+    height: 16px;
   }
 
   .cat {
@@ -910,6 +1314,52 @@ h2 {
   }
 
   .bonus-status {
-    top: max(52px, calc(env(safe-area-inset-top) + 48px));
+    top: auto;
+    bottom: max(112px, calc(env(safe-area-inset-bottom) + 104px));
+  }
+
+  .stage-banner {
+    top: 26%;
+    width: min(94%, 520px);
+    font-size: clamp(18px, 6vw, 28px);
+  }
+
+  .stage-banner.compact {
+    top: max(58px, calc(env(safe-area-inset-top) + 50px));
+    right: 12px;
+    max-width: 56vw;
+    font-size: clamp(12px, 3.2vw, 15px);
+  }
+
+  .stage-banner-image {
+    max-height: 24vh;
+  }
+
+  .start-tip {
+    width: min(92%, 520px);
+  }
+
+  .start-tip img {
+    max-height: 62vh;
+  }
+
+  .title-logo {
+    width: min(94vw, 620px);
+    max-height: 58vh;
+  }
+
+  .story-card {
+    width: min(94vw, 560px);
+    gap: 10px;
+  }
+
+  .story-stage-image {
+    width: min(94%, 360px);
+    max-height: 22vh;
+  }
+
+  .story-text {
+    font-size: clamp(12px, 3.2vw, 16px);
+    line-height: 1.38;
   }
 }

@@ -17,6 +17,7 @@
 
         <header class="hud">
           <p class="mini-title">よけて！れいたうん</p>
+          <p class="stage-pill" id="stageLabel">ステージ1 おでかけ道</p>
           <p class="score" aria-label="スコア">
             <span class="score-icon" aria-hidden="true"></span>
             <span class="score-label">スコア</span>
@@ -33,6 +34,10 @@
         </div>
 
         <p class="bonus-status" id="bonusStatus" aria-live="polite">ピザぞうりょうちゅう</p>
+        <div class="stage-banner" id="stageBanner" aria-live="polite">
+          <img class="stage-banner-image" id="stageBannerImage" src="assets/stage_goal_1.png" alt="ステージ1 目標スコア50" hidden>
+          <span class="stage-banner-text" id="stageBannerText">ステージ1 おでかけ道</span>
+        </div>
 
         <div class="supporter" id="supporter" aria-hidden="true">
           <p class="supporter-speech">れいちゃん、ピザやけたよ〜！</p>
@@ -47,16 +52,37 @@
           <button class="primary-button" id="startButton" type="button">スタート</button>
         </section>
 
+        <section class="story-modal hidden" id="storyModal" aria-live="polite">
+          <div class="story-card">
+            <img class="story-stage-image" id="storyStageImage" src="assets/stage_goal_1.png" alt="">
+            <p class="story-text" id="storyText">
+              れいちゃんはピザパーティーへおでかけ中。石とゴミをよけて、ピザとりんごを集めよう！
+            </p>
+            <button class="primary-button story-ok" id="storyOkButton" type="button">OK</button>
+          </div>
+        </section>
+
         <section class="screen game-over-screen hidden" id="gameOverScreen">
           <div class="final-panel">
             <div class="final-decoration final-star-a" aria-hidden="true"></div>
             <div class="final-decoration final-star-b" aria-hidden="true"></div>
             <div class="final-decoration final-confetti-a" aria-hidden="true"></div>
             <div class="final-decoration final-confetti-b" aria-hidden="true"></div>
+            <div class="final-decoration final-confetti-c" aria-hidden="true"></div>
+            <div class="final-decoration final-confetti-d" aria-hidden="true"></div>
+            <div class="final-decoration final-confetti-e" aria-hidden="true"></div>
+            <div class="final-decoration final-star-c" aria-hidden="true"></div>
+            <div class="final-decoration final-dot-a" aria-hidden="true"></div>
+            <div class="final-decoration final-dot-b" aria-hidden="true"></div>
             <h2 class="final-title">
-              <span>すごい！</span>
-              <span>よくよけたね！</span>
+              <img class="final-title-default" src="assets/reitown_sugoi.png" alt="すごい！よくよけたね！">
+              <img class="final-title-clear" src="assets/touchaku_title.png" alt="とうちゃく！">
+              <span class="visually-hidden" id="finalTitleMain">すごい！</span>
+              <span class="visually-hidden" id="finalTitleSub">よくよけたね！</span>
             </h2>
+            <figure class="clear-party">
+              <img src="assets/party_scene.png" alt="れいちゃんとダイスと仲間たちのピザパーティー会場">
+            </figure>
             <p class="final-score" aria-label="さいごのスコア">
               <span class="final-score-label">スコア</span>
               <span class="final-score-number" id="finalScore">0</span>
