@@ -8,6 +8,9 @@ const stageBannerImage = document.getElementById("stageBannerImage");
 const stageBannerText = document.getElementById("stageBannerText");
 const finalTitleMain = document.getElementById("finalTitleMain");
 const finalTitleSub = document.getElementById("finalTitleSub");
+const finalTitleDefault = document.querySelector(".final-title-default");
+const finalTitleClear = document.querySelector(".final-title-clear");
+const clearParty = document.querySelector(".clear-party");
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 const storyModal = document.getElementById("storyModal");
@@ -130,6 +133,7 @@ function resetGame() {
   startScreen.classList.add("hidden");
   gameOverScreen.classList.add("hidden");
   gameOverScreen.classList.remove("clear-screen");
+  setClearResult(false);
   requestAnimationFrame(update);
 }
 
@@ -568,6 +572,7 @@ function endGame() {
   finalTitleMain.textContent = "すごい！";
   finalTitleSub.textContent = "よくよけたね！";
   finalScore.textContent = state.score;
+  setClearResult(false);
   gameOverScreen.classList.remove("clear-screen");
   gameOverScreen.classList.remove("hidden");
 }
@@ -585,8 +590,15 @@ function completeGame() {
   finalTitleMain.textContent = "とうちゃく！";
   finalTitleSub.textContent = "ピザパーティーだよ！";
   finalScore.textContent = state.score;
+  setClearResult(true);
   gameOverScreen.classList.add("clear-screen");
   gameOverScreen.classList.remove("hidden");
+}
+
+function setClearResult(isClear) {
+  finalTitleDefault.hidden = isClear;
+  finalTitleClear.hidden = !isClear;
+  clearParty.hidden = !isClear;
 }
 
 function handleAction(event) {

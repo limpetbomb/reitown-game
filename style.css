@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   min-height: 100vh;
   margin: 0;
@@ -51,57 +55,62 @@ button {
 .game::after {
   content: "";
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   left: 0;
   right: 0;
   bottom: 20%;
   height: 28%;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 18% 88%, rgba(143, 200, 255, 0.48) 0 18%, transparent 18.5%),
-    radial-gradient(ellipse at 42% 92%, rgba(157, 223, 138, 0.42) 0 20%, transparent 20.5%),
-    radial-gradient(ellipse at 76% 90%, rgba(143, 200, 255, 0.38) 0 17%, transparent 17.5%);
+    radial-gradient(circle at 12% 46%, rgba(255, 143, 175, 0.75) 0 7px, transparent 8px),
+    radial-gradient(circle at 21% 58%, rgba(255, 226, 129, 0.75) 0 6px, transparent 7px),
+    radial-gradient(circle at 84% 50%, rgba(255, 143, 175, 0.65) 0 7px, transparent 8px),
+    radial-gradient(ellipse at 18% 88%, rgba(134, 211, 141, 0.7) 0 18%, transparent 18.5%),
+    radial-gradient(ellipse at 42% 92%, rgba(157, 223, 138, 0.58) 0 20%, transparent 20.5%),
+    radial-gradient(ellipse at 76% 90%, rgba(112, 191, 120, 0.5) 0 17%, transparent 17.5%);
 }
 
 .game[data-stage="2"] {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 6%, transparent 6% 13%, rgba(255, 255, 255, 0.18) 13% 18%, transparent 18%),
-    linear-gradient(180deg, #c8f4ff 0%, #f2fbff 62%, #fff1c8 63%, #f4d184 100%);
-  background-size: 160px 160px, 100% 100%;
+    linear-gradient(90deg, transparent 0 48%, rgba(255, 255, 255, 0.5) 48% 52%, transparent 52%),
+    linear-gradient(180deg, #b6e7ff 0%, #e4f7ff 58%, #ccd4df 59%, #9fa9b8 100%);
+  background-size: 100% 100%, 100% 100%;
 }
 
 .game[data-stage="2"]::after {
   height: 34%;
   background:
-    linear-gradient(to top, rgba(143, 200, 255, 0.62) 0 48%, transparent 48%) 68% 100% / 72px 128px no-repeat,
-    linear-gradient(to top, rgba(143, 200, 255, 0.48) 0 52%, transparent 52%) 49% 100% / 58px 104px no-repeat,
-    linear-gradient(to top, rgba(143, 200, 255, 0.55) 0 44%, transparent 44%) 82% 100% / 48px 88px no-repeat,
-    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0 8px, transparent 8px 18px) 67% 58% / 24px 24px repeat-y,
-    linear-gradient(90deg, rgba(255, 255, 255, 0.48) 0 7px, transparent 7px 17px) 49% 60% / 22px 22px repeat-y,
+    linear-gradient(to top, #7fb4dc 0 72%, transparent 72%) 64% 100% / 76px 150px no-repeat,
+    linear-gradient(to top, #9cc9e7 0 68%, transparent 68%) 48% 100% / 62px 122px no-repeat,
+    linear-gradient(to top, #6fa6cf 0 62%, transparent 62%) 82% 100% / 54px 104px no-repeat,
+    linear-gradient(to top, #b9dcff 0 58%, transparent 58%) 28% 100% / 66px 112px no-repeat,
+    repeating-linear-gradient(90deg, #ffffff 0 8px, transparent 8px 22px) 64% 42% / 56px 70px no-repeat,
+    repeating-linear-gradient(90deg, #ffffff 0 7px, transparent 7px 20px) 48% 48% / 46px 54px no-repeat,
     radial-gradient(ellipse at 18% 94%, rgba(157, 223, 138, 0.34) 0 18%, transparent 18.5%);
-  opacity: 0.88;
+  opacity: 1;
 }
 
 .game[data-stage="3"] {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0 6%, transparent 6% 12%, rgba(255, 255, 255, 0.16) 12% 18%, transparent 18%),
-    linear-gradient(180deg, #ffd6e8 0%, #fff3d9 61%, #ffe3ad 62%, #efbd77 100%);
-  background-size: 130px 130px, 100% 100%;
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.88) 0 32px, transparent 33px),
+    radial-gradient(circle at 82% 18%, rgba(255, 226, 129, 0.78) 0 38px, transparent 39px),
+    linear-gradient(180deg, #ffd3e6 0%, #fff1c4 54%, #ffb8cc 55%, #f48ba8 100%);
+  background-size: 100% 100%;
 }
 
 .game[data-stage="3"]::after {
   height: 38%;
   background:
-    radial-gradient(circle at 12% 20%, #ff8faf 0 5px, transparent 6px),
-    radial-gradient(circle at 20% 28%, #ffe281 0 5px, transparent 6px),
-    radial-gradient(circle at 28% 20%, #8fc8ff 0 5px, transparent 6px),
-    radial-gradient(circle at 36% 28%, #ff8faf 0 5px, transparent 6px),
-    radial-gradient(circle at 44% 20%, #ffe281 0 5px, transparent 6px),
-    linear-gradient(135deg, transparent 0 42%, rgba(255, 143, 175, 0.42) 42% 58%, transparent 58%) 70% 78% / 120px 92px no-repeat,
-    linear-gradient(225deg, transparent 0 42%, rgba(255, 226, 129, 0.58) 42% 58%, transparent 58%) 70% 78% / 120px 92px no-repeat,
-    radial-gradient(ellipse at 76% 96%, rgba(255, 247, 207, 0.68) 0 22%, transparent 22.5%),
-    radial-gradient(ellipse at 34% 96%, rgba(143, 200, 255, 0.3) 0 16%, transparent 16.5%);
-  opacity: 0.92;
+    repeating-linear-gradient(90deg, #ff8faf 0 22px, #fff7cf 22px 44px) 76% 82% / 170px 118px no-repeat,
+    linear-gradient(to top, #e07095 0 52%, transparent 52%) 76% 100% / 190px 140px no-repeat,
+    radial-gradient(circle at 10% 20%, #ff8faf 0 6px, transparent 7px),
+    radial-gradient(circle at 20% 28%, #ffe281 0 6px, transparent 7px),
+    radial-gradient(circle at 30% 20%, #8fc8ff 0 6px, transparent 7px),
+    radial-gradient(circle at 40% 28%, #ff8faf 0 6px, transparent 7px),
+    radial-gradient(circle at 50% 20%, #ffe281 0 6px, transparent 7px),
+    radial-gradient(ellipse at 76% 96%, rgba(255, 247, 207, 0.78) 0 22%, transparent 22.5%),
+    radial-gradient(ellipse at 34% 96%, rgba(143, 200, 255, 0.4) 0 16%, transparent 16.5%);
+  opacity: 1;
 }
 
 .sky,
@@ -324,17 +333,17 @@ button {
   z-index: 6;
   left: 50%;
   top: auto;
-  bottom: clamp(104px, 18vw, 150px);
+  bottom: clamp(28px, 5vw, 48px);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   margin: 0;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border: 4px solid #ffffff;
   border-radius: 999px;
   background: linear-gradient(180deg, #fff7cf 0%, #ffe281 100%);
   color: #f45d86;
-  font-size: clamp(12px, 2vw, 16px);
+  font-size: clamp(11px, 1.6vw, 14px);
   font-weight: 900;
   line-height: 1;
   box-shadow: 0 5px 0 rgba(49, 95, 167, 0.13);
@@ -396,7 +405,7 @@ button {
 .stage-banner.compact {
   left: auto;
   right: 18px;
-  top: 64px;
+  top: 94px;
   width: auto;
   max-width: min(58vw, 300px);
   padding: 0;
@@ -652,13 +661,13 @@ h2 {
 
 .final-title-clear,
 .clear-party {
-  display: none;
+  display: none !important;
 }
 
 .clear-party {
   position: relative;
   z-index: 2;
-  width: min(94%, 440px);
+  width: min(88%, 390px);
   margin: -4px 0 0;
   overflow: hidden;
   border: 5px solid #ffffff;
@@ -670,19 +679,21 @@ h2 {
 .clear-party img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 7;
   object-fit: cover;
 }
 
 .game-over-screen.clear-screen .final-panel {
   width: min(92vw, 660px);
-  min-height: min(78vh, 520px);
-  gap: 10px;
-  padding: clamp(14px, 2.8vw, 26px);
+  max-height: calc(100% - 24px);
+  min-height: 0;
+  gap: 8px;
+  padding: clamp(12px, 2vw, 20px);
+  align-content: center;
 }
 
 .game-over-screen.clear-screen .final-title {
-  width: min(82%, 480px);
+  width: min(54%, 320px);
 }
 
 .game-over-screen.clear-screen .final-title-default {
@@ -691,27 +702,27 @@ h2 {
 
 .game-over-screen.clear-screen .final-title-clear,
 .game-over-screen.clear-screen .clear-party {
-  display: block;
+  display: block !important;
 }
 
 .game-over-screen.clear-screen .final-score {
   min-height: auto;
-  width: min(70%, 260px);
-  padding: 8px 14px;
+  width: min(62%, 230px);
+  padding: 6px 12px;
   grid-template-columns: auto auto;
   align-items: center;
   gap: 10px;
 }
 
 .game-over-screen.clear-screen .final-score-label {
-  padding: 5px 16px;
-  font-size: clamp(14px, 2.5vw, 20px);
+  padding: 4px 14px;
+  font-size: clamp(13px, 2.2vw, 18px);
 }
 
 .game-over-screen.clear-screen .final-score-number {
-  min-width: 70px;
+  min-width: 60px;
   padding: 0 8px;
-  font-size: clamp(34px, 6vw, 52px);
+  font-size: clamp(30px, 5vw, 44px);
 }
 
 .final-score {
@@ -911,7 +922,7 @@ h2 {
 }
 
 .world {
-  z-index: 2;
+  z-index: 3;
 }
 
 .ground {
@@ -935,6 +946,7 @@ h2 {
   aspect-ratio: 582 / 686;
   transform: translateY(var(--jump-y, 0px));
   will-change: transform;
+  z-index: 2;
 }
 
 .cat img {
@@ -980,8 +992,9 @@ h2 {
 
 .item {
   position: absolute;
+  z-index: 4;
   left: 0;
-  bottom: 22%;
+  bottom: 24%;
   width: clamp(36px, 6vw, 52px);
   height: clamp(34px, 5.4vw, 48px);
   will-change: transform;
@@ -1033,7 +1046,7 @@ h2 {
 .item-trash {
   width: clamp(34px, 5.6vw, 48px);
   height: clamp(38px, 6vw, 54px);
-  bottom: 21%;
+  bottom: 25%;
   border-radius: 8px 8px 12px 12px;
   background:
     linear-gradient(90deg, transparent 0 24%, rgba(78, 90, 112, 0.28) 24% 31%, transparent 31% 46%, rgba(78, 90, 112, 0.22) 46% 53%, transparent 53% 70%, rgba(78, 90, 112, 0.22) 70% 77%, transparent 77%),
@@ -1079,11 +1092,11 @@ h2 {
 }
 
 .item-pizza {
-  bottom: 21%;
-  width: clamp(64px, 9vw, 88px);
-  height: clamp(48px, 6.8vw, 66px);
+  bottom: 25%;
+  width: clamp(74px, 10vw, 104px);
+  height: clamp(56px, 7.8vw, 78px);
   border-radius: 8px;
-  background: url("assets/pizza.png") center / contain no-repeat;
+  background: url("assets/pizza.png") center / 118% auto no-repeat;
   filter: drop-shadow(0 7px 0 rgba(129, 83, 44, 0.1));
 }
 
@@ -1258,10 +1271,11 @@ h2 {
   }
 
   .hud {
-    top: max(12px, env(safe-area-inset-top));
-    left: 12px;
-    right: 12px;
+    top: max(8px, env(safe-area-inset-top));
+    left: 8px;
+    right: 8px;
     gap: 6px;
+    align-items: flex-start;
   }
 
   .mini-title {
@@ -1269,20 +1283,21 @@ h2 {
   }
 
   .stage-pill {
-    width: clamp(230px, 66vw, 310px);
-    max-width: 68vw;
-    min-height: 62px;
+    width: clamp(174px, 52vw, 236px);
+    max-width: 54vw;
+    min-height: 48px;
     overflow: hidden;
-    padding: 23px 48px 14px 42px;
-    font-size: 9px;
+    padding: 17px 38px 10px 32px;
+    font-size: 8px;
     text-overflow: ellipsis;
   }
 
   .score {
-    min-width: 104px;
+    min-width: 94px;
     gap: 5px;
-    padding: 6px 8px;
-    font-size: 12px;
+    padding: 5px 7px;
+    border-width: 3px;
+    font-size: 11px;
   }
 
   .score-icon {
@@ -1292,7 +1307,26 @@ h2 {
 
   .cat {
     left: 8%;
+    bottom: 21%;
     width: clamp(78px, 28vw, 124px);
+  }
+
+  .ground {
+    height: 20%;
+  }
+
+  .item {
+    bottom: 27%;
+  }
+
+  .item-trash,
+  .item-pizza {
+    bottom: 27%;
+  }
+
+  .item-pizza {
+    width: clamp(70px, 18vw, 94px);
+    height: clamp(52px, 13vw, 70px);
   }
 
   .supporter {
@@ -1315,51 +1349,154 @@ h2 {
 
   .bonus-status {
     top: auto;
-    bottom: max(112px, calc(env(safe-area-inset-bottom) + 104px));
+    bottom: max(24px, calc(env(safe-area-inset-bottom) + 18px));
   }
 
   .stage-banner {
-    top: 26%;
-    width: min(94%, 520px);
+    top: 18%;
+    width: min(92%, 440px);
     font-size: clamp(18px, 6vw, 28px);
   }
 
   .stage-banner.compact {
-    top: max(58px, calc(env(safe-area-inset-top) + 50px));
+    top: max(82px, calc(env(safe-area-inset-top) + 76px));
     right: 12px;
     max-width: 56vw;
     font-size: clamp(12px, 3.2vw, 15px);
   }
 
   .stage-banner-image {
-    max-height: 24vh;
+    max-height: 18vh;
   }
 
   .start-tip {
-    width: min(92%, 520px);
+    width: min(92%, 360px);
   }
 
   .start-tip img {
-    max-height: 62vh;
+    max-height: 56vh;
   }
 
   .title-logo {
-    width: min(94vw, 620px);
-    max-height: 58vh;
+    width: min(92vw, 390px);
+    max-height: 44vh;
+  }
+
+  .screen {
+    padding: 14px;
+    gap: 14px;
   }
 
   .story-card {
-    width: min(94vw, 560px);
-    gap: 10px;
+    width: min(92vw, 390px);
+    max-height: calc(100svh - 44px);
+    gap: 8px;
+    padding: 12px;
+    border-width: 5px;
+    border-radius: 24px;
   }
 
   .story-stage-image {
-    width: min(94%, 360px);
-    max-height: 22vh;
+    width: min(90%, 300px);
+    max-height: 18vh;
   }
 
   .story-text {
-    font-size: clamp(12px, 3.2vw, 16px);
-    line-height: 1.38;
+    font-size: clamp(11px, 3vw, 14px);
+    line-height: 1.32;
+  }
+
+  .story-ok {
+    min-height: 38px;
+    min-width: 96px;
+    padding: 8px 16px;
+  }
+
+  .game-over-screen {
+    padding: 10px;
+  }
+
+  .final-panel {
+    width: min(92vw, 390px);
+    max-height: calc(100svh - 28px);
+    min-height: 0;
+    gap: 8px;
+    padding: 14px;
+    border-width: 5px;
+    border-radius: 24px;
+  }
+
+  .final-title {
+    width: min(86%, 300px);
+  }
+
+  .final-score {
+    width: min(74%, 230px);
+    min-height: 96px;
+    padding: 10px;
+    border-width: 4px;
+  }
+
+  .final-score-label {
+    padding: 5px 16px;
+    font-size: 15px;
+  }
+
+  .final-score-number {
+    min-width: 78px;
+    font-size: clamp(40px, 12vw, 58px);
+  }
+
+  .final-restart {
+    min-width: 174px;
+    min-height: 46px;
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  .game-over-screen.clear-screen .final-panel {
+    width: min(94vw, 400px);
+    max-height: calc(100svh - 24px);
+    min-height: 0;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .game-over-screen.clear-screen .final-title {
+    width: min(62%, 230px);
+  }
+
+  .clear-party {
+    width: min(88%, 300px);
+    margin: -2px 0 0;
+    border-width: 4px;
+    border-radius: 18px;
+  }
+
+  .clear-party img {
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+  }
+
+  .game-over-screen.clear-screen .final-score {
+    width: min(68%, 190px);
+    padding: 5px 8px;
+    gap: 6px;
+  }
+
+  .game-over-screen.clear-screen .final-score-label {
+    font-size: 13px;
+    padding: 4px 12px;
+  }
+
+  .game-over-screen.clear-screen .final-score-number {
+    min-width: 50px;
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .game-over-screen.clear-screen .final-restart {
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }
